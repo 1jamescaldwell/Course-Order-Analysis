@@ -1,4 +1,6 @@
-7/21/25: Work in progress. Working on integration with qlik sense. More work to be done on file input/output. Will clean up files and versions when complete!
+7/21/25: Work in progress. 
+
+Collaboration effort with Natalia Startseva and UBI team at UVA. 
 
 This notebook analyzes the impact of course-taking order on student outcomes (e.g., GPA) at the University of Virginia. It was created in response to a question about whether students perform differently depending on the sequence in which they take certain key classes—e.g., is it better to take Calculus before Linear Algebra, or the other way around?
 
