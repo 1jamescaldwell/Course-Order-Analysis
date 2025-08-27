@@ -155,7 +155,6 @@ if __name__ == "__main__":
             raise ValueError(r"No input file path provided. Call the function like: python CourseOrder.py '..filepath\userID_2025-07-08_09-37-48.csv'")
 
         inFile = sys.argv[1]
-        # print(inFile)
         save_file_name = inFile.split('\\')[-1][:-4] # Collect the UserID and date-time for saving the file. 
         output_path = f'{data_path}/Results/{save_file_name}.xlsx'
         
@@ -239,16 +238,20 @@ if __name__ == "__main__":
     f.write(f"Script finished\n")
     f.close()
 
-    # Convert the string into a DataFrame for one of the excel file tabs    
-    error_df = pd.DataFrame({'Error': [error_message]})
+    # Create dataframe for storing error message and request parameters for displaying in qlik
+        # This will save as one of the excel file tabs  
+    error_df = pd.DataFrame({'Error': ['1. ' + error_message]})
+    error_df.loc[1,'Error'] = '2. Selected Terms: ' + str(course_list)
+    error_df.loc[2,'Error'] = '3. Include Repeats: ' + str(include_repeats)
+    error_df.loc[3,'Error'] = '4. Min Group Size: ' + str(min_cutoff_course_number)
+    print(error_df)
     
     # Add Error message to output excel file
         # If the code above errored and did not create a file, make a new one. Otherwise, append the error message to a new sheet
     if not (output_path.split('/')[-1].find('scheduler') != -1): # qlik auto generates some "scheduler" files when it reloads the app. Don't process these. 
         if os.path.exists(output_path):
             mode = 'a' # append
-        else:
-            # Create empty sheet that will still load into qlik but display nothing       
+        else:  # Create empty sheet that will still load into qlik but display nothing 
             plot_columns = ['Student System ID', 'Avg Grade', 'Course|Order w/ Count']
             plot_data = pd.DataFrame(columns=plot_columns)
             agg_result_columns = ['Course|Order', 'Count', 'Average Grade']
